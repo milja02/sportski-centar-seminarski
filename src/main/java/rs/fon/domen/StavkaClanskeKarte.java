@@ -77,7 +77,9 @@ public class StavkaClanskeKarte {
 
     public void setSport(Sport sport) {
         Objects.requireNonNull(sport, "Stavka mora imati definisan sport.");
-        sport.validiraj();
+        sport.setIdSport(sport.getIdSport());
+        sport.setNaziv(sport.getNaziv());
+        sport.setCena(sport.getCena());
         this.sport = sport;
         if (iznosPostavljen) {
             proveriIznosStavke();
@@ -95,14 +97,6 @@ public class StavkaClanskeKarte {
             throw new IllegalArgumentException(
                     "Iznos stavke mora biti jednak proizvodu broja termina i cene sporta");
         }
-    }
-
-    public void validiraj() {
-        setClanskaKarta(clanskaKarta);
-        setRb(rb);
-        setBrojTermina(brojTermina);
-        setSport(sport);
-        setIznosStavke(iznosStavke);
     }
 
     @Override

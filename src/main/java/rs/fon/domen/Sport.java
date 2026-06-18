@@ -51,12 +51,6 @@ public class Sport {
         this.cena = cena;
     }
 
-    public void validiraj() {
-        setIdSport(idSport);
-        setNaziv(naziv);
-        setCena(cena);
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

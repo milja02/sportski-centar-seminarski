@@ -74,16 +74,9 @@ public class Polaznik {
 
     public void setMesto(Mesto mesto) {
         Objects.requireNonNull(mesto, "Polaznik mora imati definisano mesto.");
-        mesto.validiraj();
+        mesto.setIdMesto(mesto.getIdMesto());
+        mesto.setNaziv(mesto.getNaziv());
         this.mesto = mesto;
-    }
-
-    public void validiraj() {
-        setIdPolaznik(idPolaznik);
-        setIme(ime);
-        setPrezime(prezime);
-        setBrojTelefona(brojTelefona);
-        setMesto(mesto);
     }
 
     @Override
