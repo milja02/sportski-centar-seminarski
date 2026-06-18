@@ -70,7 +70,11 @@ public class ClanskaKarta {
         if (polaznik == null) {
             throw new NullPointerException("Clanska karta mora imati polaznika.");
         }
-        polaznik.validiraj();
+        polaznik.setIdPolaznik(polaznik.getIdPolaznik());
+        polaznik.setIme(polaznik.getIme());
+        polaznik.setPrezime(polaznik.getPrezime());
+        polaznik.setBrojTelefona(polaznik.getBrojTelefona());
+        polaznik.setMesto(polaznik.getMesto());
         this.polaznik = polaznik;
     }
 
@@ -113,7 +117,12 @@ public class ClanskaKarta {
         }
 
         for (StavkaClanskeKarte stavka : stavke) {
-            stavka.validiraj();
+            Objects.requireNonNull(stavka, "Stavka u listi ne sme biti null.");
+            stavka.setClanskaKarta(stavka.getClanskaKarta());
+            stavka.setRb(stavka.getRb());
+            stavka.setBrojTermina(stavka.getBrojTermina());
+            stavka.setSport(stavka.getSport());
+            stavka.setIznosStavke(stavka.getIznosStavke());
         }
 
         int zbirStavki = izracunajZbirStavki();

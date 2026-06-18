@@ -48,11 +48,6 @@ public class Mesto {
         this.postanskiBroj = postanskiBroj;
     }
 
-    public void validiraj() {
-        setIdMesto(idMesto);
-        setNaziv(naziv);
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
