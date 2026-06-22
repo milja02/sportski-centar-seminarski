@@ -133,10 +133,10 @@ public class Mesto {
     /**
      * Vraća String reprezentaciju objekta mesta.
      *
-     * @return <p>"Mesto [####]"</p>
+     * @return naziv mesta
      */
     @Override
     public String toString() {
-        return "Mesto [" + naziv + "]";
+        return naziv;
     }
 }

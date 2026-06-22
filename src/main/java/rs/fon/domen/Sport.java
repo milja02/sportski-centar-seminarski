@@ -136,10 +136,10 @@ public class Sport {
     /**
      * Vraća String reprezentaciju objekta sporta.
      *
-     * @return <p>"Sport [####]"</p>
+     * @return naziv sporta
      */
     @Override
     public String toString() {
-        return "Sport [" + naziv +"]";
+        return naziv;
     }
 }

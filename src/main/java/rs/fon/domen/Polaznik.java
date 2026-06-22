@@ -196,10 +196,10 @@ public class Polaznik {
     /**
      * Vraća String reprezentaciju objekta polaznika.
      *
-     * @return <p>"Polaznik [#### ####]"</p>
+     * @return ime i prezime polaznika
      */
     @Override
     public String toString() {
-        return "Polaznik [" + ime + " " + prezime + "]";
+        return ime + " " + prezime;
     }
 }
