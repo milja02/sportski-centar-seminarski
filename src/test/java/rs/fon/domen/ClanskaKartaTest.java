@@ -3,10 +3,14 @@ package rs.fon.domen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -206,18 +210,32 @@ class ClanskaKartaTest {
         assertFalse(clanskaKarta.equals("karta"));
     }
 
-    @Test
-    void equals_vracaTrueZaIstiDatumIPolaznika() {
+    @ParameterizedTest
+    @MethodSource("clanskaKartaEquals")
+    void equals_porediClanskeKarte(Polaznik drugiPolaznik, int idClanskaKarta, int ukupanIznos, boolean ocekivano) {
         Date datum = clanskaKarta.getDatumUclanjenja();
-        ClanskaKarta druga = new ClanskaKarta(2, datum, 2000, polaznik);
-        assertEquals(clanskaKarta, druga);
+        ClanskaKarta druga = new ClanskaKarta(idClanskaKarta, datum, ukupanIznos, drugiPolaznik);
+        if (ocekivano) {
+            assertEquals(clanskaKarta, druga);
+        } else {
+            assertNotEquals(clanskaKarta, druga);
+        }
+    }
+
+    private static Stream<Arguments> clanskaKartaEquals() {
+        Mesto mesto = new Mesto(1, "Beograd", 11000);
+        Polaznik polaznik = new Polaznik(1, "Marko", "Markovic", "0611234567", mesto);
+        Polaznik drugiPolaznik = new Polaznik(2, "Ana", "Anic", "0629876543", mesto);
+        return Stream.of(
+                Arguments.of(polaznik, 2, 2000, true),
+                Arguments.of(drugiPolaznik, 1, 6000, false)
+        );
     }
 
     @Test
-    void equals_vracaFalseZaRazlicitogPolaznika() {
-        Date datum = clanskaKarta.getDatumUclanjenja();
-        Polaznik drugiPolaznik = new Polaznik(2, "Ana", "Anic", "0629876543", mesto);
-        ClanskaKarta druga = new ClanskaKarta(1, datum, 6000, drugiPolaznik);
+    void equals_vracaFalseZaRazlicitDatum() {
+        Date drugiDatum = new Date(clanskaKarta.getDatumUclanjenja().getTime() + 1);
+        ClanskaKarta druga = new ClanskaKarta(1, drugiDatum, 6000, polaznik);
         assertNotEquals(clanskaKarta, druga);
     }
 

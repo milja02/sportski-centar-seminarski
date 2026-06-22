@@ -3,6 +3,11 @@ package rs.fon.domen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -116,16 +121,24 @@ class PolaznikTest {
         assertFalse(polaznik.equals("Marko Markovic"));
     }
 
-    @Test
-    void equals_vracaTrueZaIstaPolja() {
-        Polaznik drugi = new Polaznik(2, "Marko", "Markovic", "0611234567", mesto);
-        assertEquals(polaznik, drugi);
+    @ParameterizedTest
+    @MethodSource("polaznikEquals")
+    void equals_porediPolaznike(Polaznik drugi, boolean ocekivano) {
+        if (ocekivano) {
+            assertEquals(polaznik, drugi);
+        } else {
+            assertNotEquals(polaznik, drugi);
+        }
     }
 
-    @Test
-    void equals_vracaFalseZaRazlicitoIme() {
-        Polaznik drugi = new Polaznik(1, "Petar", "Markovic", "0611234567", mesto);
-        assertNotEquals(polaznik, drugi);
+    private static Stream<Arguments> polaznikEquals() {
+        Mesto mesto = new Mesto(1, "Beograd", 11000);
+        return Stream.of(
+                Arguments.of(new Polaznik(2, "Marko", "Markovic", "0611234567", mesto), true),
+                Arguments.of(new Polaznik(1, "Petar", "Markovic", "0611234567", mesto), false),
+                Arguments.of(new Polaznik(1, "Marko", "Anic", "0611234567", mesto), false),
+                Arguments.of(new Polaznik(1, "Marko", "Markovic", "0629876543", mesto), false)
+        );
     }
 
     @Test

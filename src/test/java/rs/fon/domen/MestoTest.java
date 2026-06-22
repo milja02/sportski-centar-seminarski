@@ -3,6 +3,8 @@ package rs.fon.domen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -88,22 +90,19 @@ class MestoTest {
         assertFalse(mesto.equals("Beograd"));
     }
 
-    @Test
-    void equals_vracaTrueZaIstaPolja() {
-        Mesto drugo = new Mesto(2, "Beograd", 11000);
-        assertEquals(mesto, drugo);
-    }
-
-    @Test
-    void equals_vracaFalseZaRazlicitNaziv() {
-        Mesto drugo = new Mesto(1, "Nis", 11000);
-        assertNotEquals(mesto, drugo);
-    }
-
-    @Test
-    void equals_vracaFalseZaRazlicitPostanskiBroj() {
-        Mesto drugo = new Mesto(1, "Beograd", 18000);
-        assertNotEquals(mesto, drugo);
+    @ParameterizedTest
+    @CsvSource({
+            "2, Beograd, 11000, true",
+            "1, Nis, 11000, false",
+            "1, Beograd, 18000, false"
+    })
+    void equals_porediMesta(int idMesto, String naziv, int postanskiBroj, boolean ocekivano) {
+        Mesto drugo = new Mesto(idMesto, naziv, postanskiBroj);
+        if (ocekivano) {
+            assertEquals(mesto, drugo);
+        } else {
+            assertNotEquals(mesto, drugo);
+        }
     }
 
     @Test

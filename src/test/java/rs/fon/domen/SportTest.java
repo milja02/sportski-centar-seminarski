@@ -3,6 +3,8 @@ package rs.fon.domen;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -92,16 +94,19 @@ class SportTest {
         assertFalse(sport.equals("Plivanje"));
     }
 
-    @Test
-    void equals_vracaTrueZaIstiNaziv() {
-        Sport drugi = new Sport(2, "Plivanje", 3000);
-        assertEquals(sport, drugi);
-    }
-
-    @Test
-    void equals_vracaFalseZaRazlicitNaziv() {
-        Sport drugi = new Sport(1, "Tenis", 2000);
-        assertNotEquals(sport, drugi);
+    @ParameterizedTest
+    @CsvSource({
+            "2, Plivanje, 3000, true",
+            "1, Tenis, 2000, false",
+            "3, Plivanje, 500, true"
+    })
+    void equals_porediSportove(int idSport, String naziv, int cena, boolean ocekivano) {
+        Sport drugi = new Sport(idSport, naziv, cena);
+        if (ocekivano) {
+            assertEquals(sport, drugi);
+        } else {
+            assertNotEquals(sport, drugi);
+        }
     }
 
     @Test
