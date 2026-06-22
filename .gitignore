@@ -4,3 +4,5 @@ target/
 .project
 .factorypath
 bin/
+polaznik.json
+polaznik_sa_weba.json
